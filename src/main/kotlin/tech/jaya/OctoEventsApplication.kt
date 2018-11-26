@@ -5,7 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.context.annotation.ComponentScan
 
 @SpringBootApplication(scanBasePackages = arrayOf("tech.jaya.*"))
-//@ComponentScan(basePackages = arrayOf("tech.java.*"))
 open class OctoEventsApplication
 
 fun main(args: Array<String>) {
