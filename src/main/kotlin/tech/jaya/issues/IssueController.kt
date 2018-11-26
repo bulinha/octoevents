@@ -1,5 +1,6 @@
 package tech.jaya.issues
 
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -17,19 +18,23 @@ open class IssueController(
         val issueRepository: IssueRepository) {
 
     @GetMapping("/")
-    fun  listIssue():Iterable<Issue> {
-        return issueRepository.findAll()
+    fun  listIssue(): ResponseEntity<MutableIterable<Issue>>? {
+        return ResponseEntity.ok(issueRepository.findAll())
     }
 
     @GetMapping("/{idIssue}")
-    fun  getIssue(@PathVariable("idIssue") idIssue:Long):Issue {
-        return issueRepository.findIssue(idIssue)
+    fun  getIssue(@PathVariable("idIssue") idIssue:Long): ResponseEntity<Issue>? {
+        return issueRepository.findIssue(idIssue).map { issue ->
+            ResponseEntity.ok(issue)
+        }.orElse(ResponseEntity.notFound().build())
     }
 
 
     @GetMapping("/{idIssue}/events")
-    fun  listEventsFromIssue(@PathVariable("idIssue") idIssue:Long):List<Event> {
-        return eventRepository.findByIssue(idIssue)
+    fun  listEventsFromIssue(@PathVariable("idIssue") idIssue:Long): ResponseEntity<List<Event>>? {
+        return eventRepository.findByIssue(idIssue).map {
+            lst -> ResponseEntity.ok(lst)
+        }.orElse(ResponseEntity.notFound().build())
     }
 
 }

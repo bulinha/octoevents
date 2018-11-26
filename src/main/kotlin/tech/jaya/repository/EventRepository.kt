@@ -5,6 +5,7 @@ import org.springframework.data.repository.CrudRepository
 import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
 import tech.jaya.model.Event
+import java.util.*
 
 @Repository
 interface EventRepository : CrudRepository<Event, Long> {
@@ -19,5 +20,5 @@ interface EventRepository : CrudRepository<Event, Long> {
                 left join fetch r.owner ro
                 where i.id = :idIssue
             """)
-    fun findByIssue(@Param("idIssue") idIssue: Long): List<Event>
+    fun findByIssue(@Param("idIssue") idIssue: Long): Optional<List<Event>>
 }

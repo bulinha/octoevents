@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
 import tech.jaya.model.Event
 import tech.jaya.model.Issue
+import java.util.*
 
 @Repository
 interface IssueRepository: CrudRepository<Issue, Long> {
@@ -14,5 +15,5 @@ interface IssueRepository: CrudRepository<Issue, Long> {
                 left join fetch i.user iu
                 where i.id = :idIssue
             """)
-    fun findIssue(@Param("idIssue") idIssue: Long): Issue
+    fun findIssue(@Param("idIssue") idIssue: Long): Optional<Issue>
 }
